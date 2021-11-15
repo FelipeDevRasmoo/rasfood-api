@@ -40,7 +40,7 @@ public class ClienteController {
         Optional<Cliente> clienteEncontrado = this.clienteRepository.findByEmailOrCpf(id);
         if (clienteEncontrado.isPresent()){
             objectMapper.updateValue(clienteEncontrado.get(),cliente);
-            return ResponseEntity.status(HttpStatus.OK).body(clienteEncontrado.get());
+            return ResponseEntity.status(HttpStatus.OK).body(this.clienteRepository.save(clienteEncontrado.get()));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }

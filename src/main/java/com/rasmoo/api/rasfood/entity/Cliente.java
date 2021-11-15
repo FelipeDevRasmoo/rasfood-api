@@ -1,15 +1,18 @@
 package com.rasmoo.api.rasfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "clientes")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Cliente {
 
     @EmbeddedId
-    private ClienteId clienteId;
+    private ClienteId clienteId = new ClienteId();
 
     private String nome;
 
