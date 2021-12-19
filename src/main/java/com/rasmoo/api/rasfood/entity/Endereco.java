@@ -1,11 +1,13 @@
 package com.rasmoo.api.rasfood.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "enderecos")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Endereco {
 
     @Id
