@@ -37,13 +37,13 @@ public class CardapioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluirPorId(@PathVariable("id") final Integer id) {
+    public ResponseEntity<?> excluirPorId(@PathVariable("id") final Integer id) {
         Optional<Cardapio> cardapioEncontrado = cardapioRepository.findById(id);
         if (cardapioEncontrado.isPresent()) {
             cardapioRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Elemento não encontrado");
     }
 
     @PostMapping
