@@ -7,6 +7,9 @@ import com.rasmoo.api.rasfood.entity.Cardapio;
 import com.rasmoo.api.rasfood.repository.CardapioRepository;
 import com.rasmoo.api.rasfood.repository.projection.CardapioProjection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +28,9 @@ public class CardapioController {
     private ObjectMapper objectMapper;
 
     @GetMapping
-    public ResponseEntity<List<Cardapio>> consultarTodos() {
-        return ResponseEntity.status(HttpStatus.OK).body(cardapioRepository.findAll());
+    public ResponseEntity<Page<Cardapio>> consultarTodos(@RequestParam("page")Integer page, @RequestParam("size")Integer size) {
+        Pageable pageable = PageRequest.of(page,size);
+        return ResponseEntity.status(HttpStatus.OK).body(cardapioRepository.findAll(pageable));
     }
 
     @GetMapping("/nome/{nome}/disponivel")

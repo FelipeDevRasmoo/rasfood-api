@@ -6,13 +6,14 @@ import com.rasmoo.api.rasfood.repository.projection.CardapioProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface CardapioRepository extends JpaRepository<Cardapio,Integer> {
+public interface CardapioRepository extends PagingAndSortingRepository<Cardapio,Integer> {
 
     @Query("SELECT new com.rasmoo.api.rasfood.dto.CardapioDto(c.nome, c.descricao, c.valor, c.categoria.nome) " +
             "FROM Cardapio c WHERE c.nome LIKE %:nome% AND c.disponivel = true")
