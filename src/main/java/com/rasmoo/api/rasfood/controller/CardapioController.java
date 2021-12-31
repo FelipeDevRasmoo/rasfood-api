@@ -34,13 +34,17 @@ public class CardapioController {
     }
 
     @GetMapping("/nome/{nome}/disponivel")
-    public ResponseEntity<List<CardapioDto>> consultarTodos(@PathVariable("nome") final String nome) {
-        return ResponseEntity.status(HttpStatus.OK).body(cardapioRepository.findAllByNome(nome));
+    public ResponseEntity<Page<CardapioDto>> consultarTodos(@PathVariable("nome") final String nome,
+                                                            @RequestParam("page")Integer page, @RequestParam("size")Integer size) {
+        Pageable pageable = PageRequest.of(page,size);
+        return ResponseEntity.status(HttpStatus.OK).body(cardapioRepository.findAllByNome(nome,pageable));
     }
 
     @GetMapping("/categoria/{categoriaId}/disponivel")
-    public ResponseEntity<List<CardapioProjection>> consultarTodos(@PathVariable("categoriaId") final Integer categoriaId) {
-        return ResponseEntity.status(HttpStatus.OK).body(cardapioRepository.findAllByCategoria(categoriaId));
+    public ResponseEntity<Page<CardapioProjection>> consultarTodos(@PathVariable("categoriaId") final Integer categoriaId,
+                                                                   @RequestParam("page")Integer page, @RequestParam("size")Integer size) {
+        Pageable pageable = PageRequest.of(page,size);
+        return ResponseEntity.status(HttpStatus.OK).body(cardapioRepository.findAllByCategoria(categoriaId,pageable));
     }
 
     @GetMapping("/{id}")

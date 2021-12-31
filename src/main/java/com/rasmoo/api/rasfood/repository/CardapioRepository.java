@@ -3,6 +3,8 @@ package com.rasmoo.api.rasfood.repository;
 import com.rasmoo.api.rasfood.dto.CardapioDto;
 import com.rasmoo.api.rasfood.entity.Cardapio;
 import com.rasmoo.api.rasfood.repository.projection.CardapioProjection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +19,7 @@ public interface CardapioRepository extends PagingAndSortingRepository<Cardapio,
 
     @Query("SELECT new com.rasmoo.api.rasfood.dto.CardapioDto(c.nome, c.descricao, c.valor, c.categoria.nome) " +
             "FROM Cardapio c WHERE c.nome LIKE %:nome% AND c.disponivel = true")
-    List<CardapioDto> findAllByNome(final String nome);
+    Page<CardapioDto> findAllByNome(final String nome, final Pageable pageable);
 
     @Query(value = "SELECT" +
             "    c.nome as nome," +
@@ -26,8 +28,10 @@ public interface CardapioRepository extends PagingAndSortingRepository<Cardapio,
             "    cat.nome as nomeCategoria" +
             "    FROM cardapio c" +
             "    INNER JOIN categorias cat on c.categoria_id = cat.id" +
-            "    WHERE c.categoria_id = ?1 AND c.disponivel = true",nativeQuery = true)
-    List<CardapioProjection> findAllByCategoria(final Integer categoria);
+            "    WHERE c.categoria_id = ?1 AND c.disponivel = true",
+            nativeQuery = true,
+            countQuery = "SELECT count(*) FROM cardapio")
+    Page<CardapioProjection> findAllByCategoria(final Integer categoria, final Pageable pageable);
 
     @Transactional
     @Modifying
