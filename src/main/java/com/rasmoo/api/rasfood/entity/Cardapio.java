@@ -1,11 +1,15 @@
 package com.rasmoo.api.rasfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cardapio")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Cardapio {
 
     @Id

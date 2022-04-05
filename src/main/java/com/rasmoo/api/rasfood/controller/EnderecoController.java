@@ -27,6 +27,11 @@ public class EnderecoController {
         return ResponseEntity.status(HttpStatus.OK).body(enderecoRepository.findAll());
     }
 
+    @GetMapping("/cep/{cep}")
+    public ResponseEntity<List<Endereco>> consultarTodosPorCep(@PathVariable("cep") final String cep){
+        return ResponseEntity.status(HttpStatus.OK).body(enderecoRepository.findByCep(cep));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Endereco> consultarPorEmailCpf(@PathVariable("id") final Integer id){
         return enderecoRepository.findById(id)
